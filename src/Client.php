@@ -9,11 +9,14 @@ use InvalidArgumentException;
 
 class Client
 {
-    /** @var Curl */
+    /** @var Curl $client */
     private $client;
 
-    /** @var string */
+    /** @var string $host */
     private $host;
+    
+    /** @var string $namespace */
+    private $namespace = '/';
 
     public function __construct()
     {
@@ -37,7 +40,19 @@ class Client
         $this->client->setHeader('Authorization', 'Bearer ' . $token);
         return $this;
     }
-
+    
+    /**
+     * Change namespace
+     * 
+     * @param string $namespace
+     * @return $this
+     */
+    public function of(string $namespace)
+    {
+        $this->namespace = $namespace;
+        return $this;
+    }
+    
     /**
      * Emit data to socket server
      *
@@ -48,8 +63,9 @@ class Client
     public function emit(string $event, array $data = []): bool
     {
         $args = [
-            'event' => $event,
-            'data'  => $data
+            'namespace'    => $this->namespace,
+            'event'        => $event,
+            'data'         => $data
         ];
         $response = $this->client->post($this->host . '/api', $args);
         if ($response->error) {
