@@ -16,6 +16,8 @@ class SocketTest extends TestCase
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
+        $client->close();
+        
         $this->assertTrue($test);
     }
     public function testSendNamespace(): void
@@ -26,6 +28,8 @@ class SocketTest extends TestCase
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
+        $client->close();
+        
         $this->assertTrue($test);
     }
 }

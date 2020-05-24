@@ -16,7 +16,7 @@ class Client
     private $host;
     
     /** @var string $namespace */
-    private $namespace = '/';
+    private $namespace;
 
     public function __construct()
     {
@@ -37,6 +37,7 @@ class Client
             throw new InvalidArgumentException('The host name is not valid');
         }
         $this->host = rtrim($host, '/');
+        $this->namespace = '/';
         $this->client->setHeader('Authorization', 'Bearer ' . $token);
         return $this;
     }
