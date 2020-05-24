@@ -9,15 +9,15 @@ use Curl\Curl as Socket;
 class Client
 {
     const HEROKU_PLATFORM = 'herokuapp.com';
-    
+
     const GLITCH_PLATFORM = 'glitch.me';
-    
+
     /** @var Socket $client */
     private $client;
 
     /** @var string $host */
     private $host;
-    
+
     /** @var string $namespace */
     private $namespace;
 
@@ -39,17 +39,16 @@ class Client
         string $name,
         string $token = 'gingdev',
         string $platform = self::HEROKU_PLATFORM
-    )
-    {
+    ) {
         $this->host = sprintf("https://%s.%s/api", $name, $platform);
         $this->client->setHeader('Authorization', 'Bearer ' . $token);
         $this->namespace = '/';
         return $this;
     }
-    
+
     /**
      * Change namespace
-     * 
+     *
      * @param string $namespace
      * @return $this
      */
@@ -58,7 +57,7 @@ class Client
         $this->namespace = $namespace;
         return $this;
     }
-    
+
     /**
      * Emit data to socket server
      *
