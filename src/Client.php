@@ -21,7 +21,7 @@ class Client
     /** @var string $namespace */
     private $namespace;
 
-    public function __construct(Factory $factory)
+    public function __construct()
     {
         // Initialize the variable
         $this->client = new Socket();
