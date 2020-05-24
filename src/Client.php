@@ -31,17 +31,18 @@ class Client
      * Initialize client
      *
      * @param string $name
-     * @param string $token
-     * @param string $platform
+     * @param array $opts
      * @return $this
      */
     public function initialize(
         string $name,
-        string $token = 'gingdev',
-        string $platform = self::HEROKU_PLATFORM
+        array $opts = [
+            'platform' => Client::HEROKU_PLATFORM,
+            'token'    => 'gingdev'
+        ]
     ) {
-        $this->host = sprintf("https://%s.%s/api", $name, $platform);
-        $this->client->setHeader('Authorization', 'Bearer ' . $token);
+        $this->host = sprintf("https://%s.%s", $name, $opts['platform']);
+        $this->client->setHeader('Authorization', 'Bearer ' . $opts['token']);
         $this->namespace = '/';
         return $this;
     }
@@ -65,7 +66,7 @@ class Client
      * @param array $data
      * @return boolean
      */
-    public function emit(string $event, array $data = []): bool
+    public function emit(string $event, array $data): bool
     {
         $args = [
             'namespace' => $this->namespace,
