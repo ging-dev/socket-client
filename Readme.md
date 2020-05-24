@@ -9,7 +9,7 @@ PHP 7.2+
 **This package only works with [Socket server](https://github.com/ging-dev/socket-server)**
 
 ## Install : 
-	composer require ging-dev/socket-client
+    composer require ging-dev/socket-client
 ## Backend:
 ```php
 <?php
@@ -20,20 +20,20 @@ $client = new Client();
 // Demo: yourapp.herokuapp.com
 $client->initialize('yourapp');
 $client->emit('news', [
-	'message' => 'New message'
+    'message' => 'New message'
 ]);
 
 // Emit to namespace
 $client->of('/namespace')
-	->emit('test', [
-		'message' => 'New message'
-	]);
+    ->emit('test', [
+    'message' => 'New message'
+    ]);
 $client->close();
 
 // Advanced usage
 $client->initialize('yourapp', [
-	'platform' => Client::HEROKU_PLATFORM, // or Client::GLITCH_PLATFORM
-	'token'	=> 'access token'
+    'platform' => Client::HEROKU_PLATFORM, // or Client::GLITCH_PLATFORM
+    'token'	=> 'access token'
 ]);
 
 $client->close();
