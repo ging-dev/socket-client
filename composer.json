@@ -2,6 +2,7 @@
     "name": "ging-dev/socket-client",
     "description": "Socket Client for PHP",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "ging-dev",

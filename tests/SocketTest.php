@@ -12,7 +12,7 @@ class SocketTest extends TestCase
     public function testSendMessage(): void
     {
         $client = (new Client())
-            ->initialize('https://ging-socket.herokuapp.com');
+            ->initialize('ging-socket');
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
@@ -23,7 +23,7 @@ class SocketTest extends TestCase
     public function testSendNamespace(): void
     {
         $client = (new Client())
-            ->initialize('https://ging-socket.herokuapp.com')
+            ->initialize('ging-socket')
             ->of('/test');
         $test = $client->emit('news', [
             'message' => 'Test message'

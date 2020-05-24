@@ -16,10 +16,18 @@ PHP 7.2+
 use Gingdev\SocketIo\Client;
 require 'vendor/autoload.php';
 $client = new Client();
-$client->initialize('http://yourapp.herokuapp.com');
+
+// Demo: name.herokuapp.com
+$client->initialize('name');
 $client->emit('news', [
 	'message' => 'New message'
 ]);
+
+// emit to namespace
+$client->of('/namespace')
+	->emit('test', [
+		'message' => 'New message'
+	]);
 $client->close();
 ```
 ## Javascript:

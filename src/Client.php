@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Gingdev\SocketIo;
 
-use Curl\Curl;
-use InvalidArgumentException;
+use Curl\Curl as Socket;
 
 class Client
 {
-    /** @var Curl $client */
+    const HEROKU_PLATFORM = 'herokuapp.com';
+    
+    const GLITCH_PLATFORM = 'glitch.me';
+    
+    /** @var Socket $client */
     private $client;
 
     /** @var string $host */
@@ -18,27 +21,29 @@ class Client
     /** @var string $namespace */
     private $namespace;
 
-    public function __construct()
+    public function __construct(Factory $factory)
     {
         // Initialize the variable
-        $this->client = new Curl();
+        $this->client = new Socket();
     }
 
     /**
      * Initialize client
      *
-     * @param string $host
+     * @param string $name
      * @param string $token
+     * @param string $platform
      * @return $this
      */
-    public function initialize(string $host, string $token = 'gingdev')
+    public function initialize(
+        string $name,
+        string $token = 'gingdev',
+        string $platform = self::HEROKU_PLATFORM
+    )
     {
-        if (! filter_var($host, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException('The host name is not valid');
-        }
-        $this->host = rtrim($host, '/');
-        $this->namespace = '/';
+        $this->host = sprintf("https://%s.%s", $name, $platform);
         $this->client->setHeader('Authorization', 'Bearer ' . $token);
+        $this->namespace = '/';
         return $this;
     }
     
@@ -64,9 +69,9 @@ class Client
     public function emit(string $event, array $data = []): bool
     {
         $args = [
-            'namespace'    => $this->namespace,
-            'event'        => $event,
-            'data'         => $data
+            'namespace' => $this->namespace,
+            'event'     => $event,
+            'data'      => $data
         ];
         $response = $this->client->post($this->host . '/api', $args);
         if ($response->error) {
