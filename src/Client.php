@@ -41,7 +41,7 @@ class Client
         string $platform = self::HEROKU_PLATFORM
     )
     {
-        $this->host = sprintf("https://%s.%s", $name, $platform);
+        $this->host = sprintf("https://%s.%s/api", $name, $platform);
         $this->client->setHeader('Authorization', 'Bearer ' . $token);
         $this->namespace = '/';
         return $this;
@@ -73,7 +73,7 @@ class Client
             'event'     => $event,
             'data'      => $data
         ];
-        $response = $this->client->post($this->host . '/api', $args);
+        $response = $this->client->post($this->host, $args);
         if ($response->error) {
             return false;
         }
