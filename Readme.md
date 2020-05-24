@@ -17,17 +17,25 @@ use Gingdev\SocketIo\Client;
 require 'vendor/autoload.php';
 $client = new Client();
 
-// Demo: name.herokuapp.com
-$client->initialize('name');
+// Demo: yourapp.herokuapp.com
+$client->initialize('yourapp');
 $client->emit('news', [
 	'message' => 'New message'
 ]);
 
-// emit to namespace
+// Emit to namespace
 $client->of('/namespace')
 	->emit('test', [
 		'message' => 'New message'
 	]);
+$client->close();
+
+// Advanced usage
+$client->initialize('yourapp', [
+	'platform' => Client::HEROKU_PLATFORM, // or Client::GLITCH_PLATFORM
+	'token'	=> 'access token'
+]);
+
 $client->close();
 ```
 ## Javascript:
