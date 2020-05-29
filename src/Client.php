@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace Gingdev\SocketIo;
 
 use Curl\Curl as Socket;
+use InvalidArgumentException;
 
 class Client
 {
-    const HEROKU_PLATFORM = 'herokuapp.com';
-
-    const GLITCH_PLATFORM = 'glitch.me';
-
     /** @var Socket $client */
     private $client;
 
@@ -31,18 +28,15 @@ class Client
      * Initialize client
      *
      * @param string $name
-     * @param array $opts
+     * @param string $token
      * @return $this
      */
-    public function initialize(
-        string $name,
-        array $opts = [
-            'platform' => Client::HEROKU_PLATFORM,
-            'token'    => 'gingdev'
-        ]
-    ) {
-        $this->host = sprintf("https://%s.%s", $name, $opts['platform']);
-        $this->client->setHeader('Authorization', 'Bearer ' . $opts['token']);
+    public function initialize(string $host, string $token = 'gingdev')
+    {
+        if (! filter_var($host, FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException('Error: Invalid URL');
+        }
+        $this->client->setHeader('Authorization', 'Bearer ' . $token);
         $this->namespace = '/';
         return $this;
     }
