@@ -33,11 +33,13 @@ class Client
      */
     public function initialize(string $host, string $token = 'gingdev')
     {
-        if (! filter_var($host, FILTER_VALIDATE_URL)) {
+        if (filter_var($host, FILTER_VALIDATE_URL)) {
+            $this->host = $host;
+            $this->client->setHeader('Authorization', 'Bearer ' . $token);
+            $this->namespace = '/';
+        } else {
             throw new InvalidArgumentException('Error: Invalid URL');
         }
-        $this->client->setHeader('Authorization', 'Bearer ' . $token);
-        $this->namespace = '/';
         return $this;
     }
 
@@ -81,6 +83,7 @@ class Client
      */
     public function close()
     {
+        $this->host = null;
         $this->client->reset();
         return $this;
     }
