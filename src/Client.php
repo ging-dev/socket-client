@@ -38,7 +38,7 @@ class Client
             $this->client->setHeader('Authorization', 'Bearer ' . $token);
             $this->namespace = '/';
         } else {
-            throw new InvalidArgumentException('Error: Invalid URL');
+            throw new InvalidArgumentException('Invalid URL');
         }
         return $this;
     }
@@ -59,10 +59,10 @@ class Client
      * Emit data to socket server
      *
      * @param string $event
-     * @param array $data
+     * @param string|array $data
      * @return boolean
      */
-    public function emit(string $event, array $data): bool
+    public function emit(string $event, $data): bool
     {
         $args = [
             'namespace' => $this->namespace,
