@@ -31,7 +31,7 @@ $client->of('/namespace')
 $client->close();
 
 // Advanced usage
-$client->initialize('https://yourapp.heroku.com', 'access token');
+$client->initialize('https://yourapp.herokuapp.com', 'access token');
 
 $client->close();
 ```
