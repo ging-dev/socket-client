@@ -16,9 +16,17 @@ class SocketTest extends TestCase
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
-        $client->close();
-
+        
         $this->assertTrue($test);
+        $client->close();
+        
+        $cient->initialize('https://ging-socket.herokuapp.com', 'error');
+        $test = $client->emit('news', [
+            'message' => 'Test message'
+        ]);
+        
+        $this->assertFalse($test);
+        $client->close();
     }
     public function testSendNamespace(): void
     {
