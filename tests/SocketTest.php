@@ -16,15 +16,15 @@ class SocketTest extends TestCase
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
-        
+
         $this->assertTrue($test);
         $client->close();
-        
-        $cient->initialize('https://ging-socket.herokuapp.com', 'error');
+
+        $client->initialize('https://ging-socket.herokuapp.com', 'error');
         $test = $client->emit('news', [
             'message' => 'Test message'
         ]);
-        
+
         $this->assertFalse($test);
         $client->close();
     }
